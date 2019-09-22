@@ -72,15 +72,15 @@ class Game extends Component {
     this.wordIndex = 0;
   };
   handleChange = event => {
-    // if (event.target.value == "admin") {
-    //   this.setState({
-    //     query: "",
-    //     text: ""
-    //   });
-    //   this.endGame(true);
+    if (event.target.value == "%$#") {
+      this.setState({
+        query: "",
+        text: ""
+      });
+      this.endGame(true);
 
-    //   return;
-    // }
+      return;
+    }
     this.counter++;
     if (!this.wordArray) this.wordArray = this.state.text.split(" ");
 

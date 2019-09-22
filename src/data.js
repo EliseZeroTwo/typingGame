@@ -11,6 +11,14 @@ const texts = [
   "He stepped down, trying not to look long at her, as if she were the sun, yet he saw her, like the sun, even without looking.",
   "I gotta tell you at this point the length of this conversation is way out of proportion to my interest in it.",
   "Though my story's seldom told, I have squandered my resistance. For a pocketful of mumbles such are promises, all lies and jest. Still, a man hears what he wants to hear and disregards the rest.",
-  "I suddenly had the impression that I had been left all alone, that everyone was shrinking away from me, avoiding me. You are, of course, right to ask who that everyone is, for although I've lived in Petersburg for eight years now, I haven't managed to make a single friend."
+  "I suddenly had the impression that I had been left all alone, that everyone was shrinking away from me, avoiding me. You are, of course, right to ask who that everyone is, for although I've lived in Petersburg for eight years now, I haven't managed to make a single friend.",
+  "All happy families are alike; each unhappy family is unhappy in its own way.",
+  "I've always been afraid that if I screamed, I might break apart in a million pieces.",
+  "I have not broken your heart - you have broken it; and in breaking it, you have broken mine.",
+  "After all, what justification is there for a word which is simply the opposite of some other word?",
+  "For all the things you've done, for the things you might have done, and for the only thing you have left.",
+  "It's sad to say that kids unaccepted by their peers really never learn how to get along with people in the big grown up world.",
+  "You can have my isolation, you can have the hate that it brings, you can have my absence of faith, you can have my everything.",
+  "I want your answer and the money by noon tomorrow. And one more thing. Don't you contact me again, ever. From now on, you deal with Turnbull."
 ];
 export default texts;
