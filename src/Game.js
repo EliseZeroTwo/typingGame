@@ -45,16 +45,51 @@ class Game extends Component {
   }
   getRandomInt(max) {
     let r = Math.floor(Math.random() * Math.floor(max));
-    console.log(r);
+
     return r;
   }
+  endGame = out => {
+    this.stopTimer();
+    let wpm = (this.origNumberOfWords / (this.state.time / 1000)) * 60;
+    this.setState({ time: 0 });
+
+    if (out) {
+      this.refs.score.textContent = "Your speed is: 0 WPM";
+      this.refs.accuracy.textContent = "Your accuracy is: 100%";
+    } else {
+      this.refs.score.textContent = `Your speed is: ${Math.ceil(wpm)} WPM`;
+      this.refs.accuracy.textContent = `Your accuracy is: ${Math.floor(
+        (this.originalNumerOfCharacters / (this.counter + 1)) * 100
+      )}%`;
+      this.props.end(
+        Math.ceil(wpm),
+        Math.floor((this.originalNumerOfCharacters / (this.counter + 1)) * 100)
+      );
+    }
+    this.wordArray = false;
+    this.refs.textF.style.display = "none";
+    this.refs.h.style.display = "none";
+    this.wordIndex = 0;
+  };
   handleChange = event => {
+    // if (event.target.value == "admin") {
+    //   this.setState({
+    //     query: "",
+    //     text: ""
+    //   });
+    //   this.endGame(true);
+
+    //   return;
+    // }
     this.counter++;
     if (!this.wordArray) this.wordArray = this.state.text.split(" ");
 
     if (!this.state.isOn) this.startTimer();
 
-    if (this.wordArray[0] + " " === event.target.value) {
+    if (
+      this.wordArray[0] + " " === event.target.value ||
+      (this.wordArray[0] === event.target.value && this.wordArray.length == 1)
+    ) {
       this.wordIndex++;
       this.setState({ query: "" });
       let newText = this.state.text.substring(this.wordArray[0].length + 1);
@@ -62,26 +97,13 @@ class Game extends Component {
 
       this.setState({ text: newText });
       if (this.wordArray.length === 0) {
-        this.stopTimer();
-        let wpm = (this.origNumberOfWords / (this.state.time / 1000)) * 60;
-        this.setState({ time: 0 });
-
-        this.refs.score.textContent = `Your speed is: ${Math.ceil(wpm)} WPM`;
-        this.refs.accuracy.textContent = `Your accuracy is: ${Math.floor(
-          (this.originalNumerOfCharacters / this.counter) * 100
-        )}%`;
-        this.props.end(
-          Math.ceil(wpm),
-          Math.floor((this.originalNumerOfCharacters / this.counter) * 100)
-        );
-
-        this.wordArray = false;
-        this.refs.textF.style.display = "none";
-        this.refs.h.style.display = "none";
-        this.wordIndex = 0;
+        this.endGame(false);
       }
     } else {
-      if (!this.wordArray[0].includes(event.target.value)) {
+      if (
+        !this.wordArray[0].includes(event.target.value) ||
+        event.target.value.split("")[0] !== this.wordArray[0].split("")[0]
+      ) {
         this.refs.textF.style.backgroundColor = "#cb6a6a";
       } else {
         this.refs.textF.style.backgroundColor = "white";
@@ -97,7 +119,7 @@ class Game extends Component {
             className="btn btn-primary btn-lg"
             onClick={() => {
               let newPara = texts[this.getRandomInt(10)];
-              this.setState({ text: newPara });
+              this.setState({ text: newPara, query: "" });
               this.originText = newPara;
 
               this.refs.score.textContent = "";
@@ -107,6 +129,7 @@ class Game extends Component {
               this.counter = -1;
               this.refs.textF.style.display = "block";
               this.refs.h.style.display = "block";
+              this.refs.textF.style.backgroundColor = "white";
               this.refs.textF.focus();
             }}
           >
@@ -120,7 +143,7 @@ class Game extends Component {
 
   showWords = () => {
     let index = 0;
-    console.log(this.state.text);
+
     let list = this.originText.split(" ").map(word => {
       if (word == this.state.text.split(" ")[0] && index == this.wordIndex) {
         index++;
