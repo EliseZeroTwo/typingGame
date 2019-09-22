@@ -8,6 +8,9 @@ const texts = [
   "A heart is not judged by how much you love; but by how much you are loved by others",
   "A rock pile ceases to be a rock pile the moment a single man contemplates it, bearing within him the image of a cathedral.",
   "I looked at the stars, and considered how awful it would be for a man to turn his face up to them as he froze to death, and see no help or pity in all the glittering multitude.",
-  "He stepped down, trying not to look long at her, as if she were the sun, yet he saw her, like the sun, even without looking."
+  "He stepped down, trying not to look long at her, as if she were the sun, yet he saw her, like the sun, even without looking.",
+  "I gotta tell you at this point the length of this conversation is way out of proportion to my interest in it.",
+  "Though my story's seldom told, I have squandered my resistance. For a pocketful of mumbles such are promises, all lies and jest. Still, a man hears what he wants to hear and disregards the rest.",
+  "I suddenly had the impression that I had been left all alone, that everyone was shrinking away from me, avoiding me. You are, of course, right to ask who that everyone is, for although I've lived in Petersburg for eight years now, I haven't managed to make a single friend."
 ];
 export default texts;

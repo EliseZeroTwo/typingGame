@@ -10,6 +10,9 @@ class Leaderboard extends Component {
 
     let list = [...new Set(orderedList)].slice(0, 10).map(item => {
       let name = item.split(" ")[0];
+      if (name.includes("-")) {
+        name = name.split("-").join(" ");
+      }
       let score = item.split(" ")[1];
       let accuracy = item.split(" ")[2];
 

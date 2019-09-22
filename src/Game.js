@@ -9,7 +9,7 @@ class Game extends Component {
     time: 0,
     isOn: false,
     start: 0,
-    text: texts[this.getRandomInt(10)]
+    text: texts[this.getRandomInt(texts.length)]
   };
   componentDidMount() {
     this.refs.textF.focus();
@@ -118,7 +118,7 @@ class Game extends Component {
           <button
             className="btn btn-primary btn-lg"
             onClick={() => {
-              let newPara = texts[this.getRandomInt(10)];
+              let newPara = texts[this.getRandomInt(texts.length)];
               this.setState({ text: newPara, query: "" });
               this.originText = newPara;
 

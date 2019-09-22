@@ -29,7 +29,15 @@ class App extends Component {
     }
 
     str = str.concat(
-      this.state.currentName.trim() + " " + score + " " + accuracy + ";"
+      this.state.currentName
+        .trim()
+        .split(" ")
+        .join("-") +
+        " " +
+        score +
+        " " +
+        accuracy +
+        ";"
     );
 
     localStorage.setItem("leaderboard", str);
