@@ -31,7 +31,7 @@ class Name extends Component {
         </h1>
 
         <input
-          className="form-control mb-5 mx-auto"
+          className="form-control mb-5 mx-auto rounded-pill"
           ref="name"
           type="text"
           style={{ width: "250px" }}

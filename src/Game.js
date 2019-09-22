@@ -156,7 +156,7 @@ class Game extends Component {
       } else {
         index++;
         return (
-          <div style={{ display: "inline" }}>
+          <div style={{ display: "inline", height: "50%" }}>
             <Word word={word} />
             <span> </span>
           </div>
@@ -172,13 +172,16 @@ class Game extends Component {
         <h3
           ref="h"
           className="my-5"
-          style={{ fontFamily: "'Titillium Web', sans-serif" }}
+          style={{
+            fontFamily: "'Titillium Web', sans-serif",
+            lineHeight: "1.4"
+          }}
         >
           {this.showWords()}
         </h3>
 
         <input
-          className="form-control"
+          className="form-control rounded-pill"
           type="text"
           ref="textF"
           value={this.state.query}

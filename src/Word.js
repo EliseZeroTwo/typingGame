@@ -4,7 +4,12 @@ class Word extends Component {
   fn = () => {
     if (this.props.color == "red")
       return (
-        <span style={{ backgroundColor: "#9bbde1" }}>{this.props.word}</span>
+        <span
+          className="border border-primary rounded"
+          style={{ backgroundColor: "#9bbde1" }}
+        >
+          {this.props.word}
+        </span>
       );
     else return <span>{this.props.word}</span>;
   };
