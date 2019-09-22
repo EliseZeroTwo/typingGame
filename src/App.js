@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import Game from "./Game.js";
+import Name from "./Name.js";
+class App extends Component {
+  state = {
+    currentName: false
+  };
+  fn = () => {
+    // localStorage.clear();
+    if (this.state.currentName) {
+      return <Game end={this.gameEnded} />;
+    } else {
+      return <Name setName={this.setName} />;
+    }
+  };
+
+  setName = name => {
+    let username = name.trim().length > 0 ? name : "Anonymous";
+    this.setState({
+      currentName: username
+    });
+  };
+  gameEnded = (score, accuracy) => {
+    let str = localStorage.getItem("leaderboard");
+    if (str == null) {
+      str = "";
+    }
+
+    str = str.concat(
+      this.state.currentName.trim() + " " + score + " " + accuracy + ";"
+    );
+
+    localStorage.setItem("leaderboard", str);
+  };
+  render() {
+    return (
+      <div className="App">
+        <h1 className="my-5" style={{ fontSize: "80px" }}>
+          The Typing Game
+        </h1>
+        {this.fn()}
+      </div>
+    );
+  }
 }
 
 export default App;
