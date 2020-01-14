@@ -46,7 +46,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="my-5" style={{ fontSize: "80px" }}>
-          The Typing Game
+          Touch Typo
         </h1>
         {this.fn()}
       </div>
