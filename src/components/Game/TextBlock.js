@@ -92,9 +92,9 @@ class TextBlock extends Component {
     ));
     return (
       <div className="mx-auto mt-5" style={{ width: "80%", height: "auto" }}>
-        <h5 className="w-75 mx-auto" style={{ lineHeight: 1.8 }}>
+        <h3 className="w-75 mx-auto" style={{ lineHeight: 1.8 }}>
           {wordsRender}
-        </h5>
+        </h3>
         <Input
           className="mt-3 w-75 py-3"
           ref="textInput"
