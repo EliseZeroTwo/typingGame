@@ -5,7 +5,7 @@ export const createScore = score => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "http://94a77985.ngrok.io/api/create_score/",
+        "https://94a77985.ngrok.io/api/create_score/",
         score
       );
       const scoreRes = res.data;
