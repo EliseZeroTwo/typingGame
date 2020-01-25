@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Word from "./Word";
 import { Input } from "antd";
-import { createScore } from "../../redux/actions";
+import { createScore, fetchARandomText } from "../../redux/actions";
 import { connect } from "react-redux";
 
 class TextBlock extends Component {
@@ -72,6 +72,7 @@ class TextBlock extends Component {
               accuracy: accuracy,
               text: textID
             });
+            this.props.fetchARandomText();
             this.props.history.push("/results");
           }
         }
@@ -118,6 +119,7 @@ class TextBlock extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     //Syntax
+    fetchARandomText: () => dispatch(fetchARandomText()),
     createScore: score => dispatch(createScore(score))
   };
 };
