@@ -91,16 +91,16 @@ class TextBlock extends Component {
       />
     ));
     return (
-      <div className="mx-auto mt-5" style={{ width: "80%", height: "auto" }}>
-        <h3 className="w-75 mx-auto" style={{ lineHeight: 1.8 }}>
+      <div className="mx-auto mt-5" style={{ width: "85%", height: "auto" }}>
+        <h3 className=" mx-auto" style={{ lineHeight: 1.7, width: "100%" }}>
           {wordsRender}
         </h3>
         <Input
-          className="mt-3 w-75 py-3"
+          className="mt-3 w-75 py-4"
           ref="textInput"
           style={{
             backgroundColor: this.state.error && "#ed2846",
-            fontSize: 20
+            fontSize: 28
           }}
           value={this.state.inputValue}
           placeholder="Start typing here.."
