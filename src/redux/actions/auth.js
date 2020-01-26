@@ -7,7 +7,7 @@ export const login = userData => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "https://64a7f4cd.ngrok.io/api/login/",
+        "https://104.248.166.81/api/login/",
         userData
       );
 
