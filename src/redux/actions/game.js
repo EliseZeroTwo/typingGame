@@ -5,7 +5,7 @@ export const createScore = score => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "https://104.248.166.81/api/create_score/",
+        "http://104.248.166.81/api/create_score/",
         score
       );
       const scoreRes = res.data;

@@ -7,7 +7,7 @@ export const login = userData => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "https://104.248.166.81/api/login/",
+        "http://104.248.166.81/api/login/",
         userData
       );
 
