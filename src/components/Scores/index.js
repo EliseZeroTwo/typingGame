@@ -12,7 +12,6 @@ class index extends Component {
   componentDidUpdate = prevProps => {
     console.log(prevProps);
     if (this.props.lastScore != prevProps.lastScore) {
-      console.log("here");
       this.props.fetchLeaderboard();
     }
   };
@@ -42,6 +41,12 @@ class index extends Component {
             )}
           </>
         )}
+        <Button
+          onClick={() => this.props.history.replace("/game")}
+          className="mt-2"
+        >
+          Start a test
+        </Button>
         {this.props.leaderboard && (
           <Leaderboard scores={this.props.leaderboard} />
         )}
