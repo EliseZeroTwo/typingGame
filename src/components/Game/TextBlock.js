@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Word from "./Word";
 import { Input } from "antd";
-import { createScore, fetchARandomText } from "../../redux/actions";
+import {
+  createScore,
+  fetchARandomText,
+  resetText,
+  setLoadingOn
+} from "../../redux/actions";
 import { connect } from "react-redux";
 
 class TextBlock extends Component {
@@ -12,11 +17,16 @@ class TextBlock extends Component {
     inputValue: "",
     isTimerOn: false,
     time: 0,
-    incorrectKeystrokes: 0
+    incorrectKeystrokes: 0,
+    wpm: 0,
+    typedKeys: 0,
+    longestTyped: ""
   };
   componentDidMount = () => {
     this.refs.textInput.focus();
-    this.setState({ nextWord: this.props.text.text.split(" ")[0].concat(" ") });
+    this.setState({
+      nextWord: this.props.text.text.split(" ")[0].concat(" ")
+    });
   };
   startTimer = () => {
     this.setState({ isTimerOn: true });
@@ -25,10 +35,15 @@ class TextBlock extends Component {
   timer = () => {
     this.setState({ time: this.state.time + 0.1 });
   };
+
   handleChange = e => {
     if (!this.state.isTimerOn) this.startTimer();
 
-    this.setState({ inputValue: e.target.value });
+    this.setState({
+      inputValue: e.target.value,
+      wpm: Math.floor((this.state.typedKeys / 5 / this.state.time) * 60)
+    });
+
     if (!this.state.nextWord.startsWith(e.target.value)) {
       this.setState({
         error: true
@@ -40,9 +55,19 @@ class TextBlock extends Component {
       }
     } else {
       if (this.state.error) this.setState({ error: false });
+      if (
+        this.state.longestTyped == "" ||
+        e.target.value.length > this.state.longestTyped.length
+      ) {
+        this.setState({
+          longestTyped: e.target.value,
+          typedKeys: this.state.typedKeys + 1
+        });
+      }
+
       if (this.state.nextWord.length == e.target.value.length) {
         this.setState({ currentIndex: this.state.currentIndex + 1 });
-        this.setState({ inputValue: "" });
+        this.setState({ inputValue: "", longestTyped: "" });
 
         if (this.state.currentIndex + 2 == this.props.text.length) {
           this.setState({
@@ -60,7 +85,6 @@ class TextBlock extends Component {
           } else {
             //End of test
             clearInterval(this.timerID);
-
             const wpm =
               (this.props.text.text.length / 5 / this.state.time) * 60;
             const accuracy =
@@ -73,6 +97,9 @@ class TextBlock extends Component {
               text: textID
             });
             this.props.fetchARandomText();
+            // this.props.resetText();
+            this.props.setLoadingOn();
+
             this.props.history.push("/results");
           }
         }
@@ -103,9 +130,12 @@ class TextBlock extends Component {
             fontSize: 28
           }}
           value={this.state.inputValue}
-          placeholder="Start typing here.."
+          placeholder={!this.state.time ? "Start typing here.." : ""}
           onChange={this.handleChange}
         />
+        <p style={{ display: "inline", marginLeft: 16, fontSize: "1.6rem" }}>
+          {this.state.wpm} WPM
+        </p>
         {!this.state.isTimerOn && (
           <p className="mt-2 text-muted">
             The timer will start as soon as you start typing
@@ -120,7 +150,8 @@ const mapDispatchToProps = dispatch => {
   return {
     //Syntax
     fetchARandomText: () => dispatch(fetchARandomText()),
-    createScore: score => dispatch(createScore(score))
+    createScore: score => dispatch(createScore(score)),
+    setLoadingOn: () => dispatch(setLoadingOn())
   };
 };
 

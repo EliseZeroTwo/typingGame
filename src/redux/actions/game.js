@@ -1,5 +1,12 @@
 import instance from "./instance";
-import { CREATE_SCORE, FETCH_TEXT, FETCH_LEADERBOARD } from "./actionTypes";
+import {
+  CREATE_SCORE,
+  FETCH_TEXT,
+  FETCH_LEADERBOARD,
+  RESET_TEXT,
+  RESET_LAST,
+  SET_LOADING
+} from "./actionTypes";
 import axios from "axios";
 export const createScore = score => {
   return async dispatch => {
@@ -9,11 +16,11 @@ export const createScore = score => {
         score
       );
       const scoreRes = res.data;
-      console.log(scoreRes);
+
       dispatch({ type: CREATE_SCORE, payload: scoreRes });
     } catch (err) {
       dispatch({ type: CREATE_SCORE, payload: { ...score, local: true } });
-      console.error(err);
+      //   console.error(err);
     }
   };
 };
@@ -39,5 +46,23 @@ export const fetchLeaderboard = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+};
+
+export const resetText = () => {
+  return {
+    type: RESET_TEXT
+  };
+};
+
+export const resetlastScore = () => {
+  return {
+    type: RESET_LAST
+  };
+};
+
+export const setLoadingOn = () => {
+  return {
+    type: SET_LOADING
   };
 };

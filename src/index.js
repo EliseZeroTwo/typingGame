@@ -13,7 +13,7 @@ import store from "./redux";
 store.dispatch(checkForExpiredToken());
 // import your redux/index.js here (the store)
 
-store.dispatch(fetchARandomText());
+// store.dispatch(fetchARandomText());
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
