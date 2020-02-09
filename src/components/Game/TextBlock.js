@@ -126,6 +126,10 @@ class TextBlock extends Component {
           className="mt-3 w-75 py-4"
           ref="textInput"
           type="text"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="off"
           style={{
             backgroundColor: this.state.error && "#ed2846",
             fontSize: 28
