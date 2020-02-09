@@ -125,6 +125,7 @@ class TextBlock extends Component {
         <Input
           className="mt-3 w-75 py-4"
           ref="textInput"
+          type="text"
           style={{
             backgroundColor: this.state.error && "#ed2846",
             fontSize: 28
