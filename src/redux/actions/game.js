@@ -30,7 +30,7 @@ export const createUScore = score => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/create_u_score/",
+        "https://api.touchtypo.com/api/create_u_score/",
         score
       );
       const scoreRes = res.data;
