@@ -67,7 +67,6 @@ export const signup = userData => {
       const res = await instance.post("/api/register/", userData);
       //If your backend logs the user in when signing up use the following code
       const user = res.data;
-      console.log(user);
       dispatch(setCurrentUser(user.access));
       //If it doesn't log you in
       dispatch(login(userData));

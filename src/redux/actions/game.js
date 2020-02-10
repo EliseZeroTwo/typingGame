@@ -5,7 +5,8 @@ import {
   FETCH_LEADERBOARD,
   RESET_TEXT,
   RESET_LAST,
-  SET_LOADING
+  SET_LOADING,
+  CREATE_U_SCORE
 } from "./actionTypes";
 import axios from "axios";
 export const createScore = score => {
@@ -21,6 +22,23 @@ export const createScore = score => {
     } catch (err) {
       dispatch({ type: CREATE_SCORE, payload: { ...score, local: true } });
       //   console.error(err);
+    }
+  };
+};
+
+export const createUScore = score => {
+  return async dispatch => {
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/create_u_score/",
+        score
+      );
+      const scoreRes = res.data;
+
+      dispatch({ type: CREATE_U_SCORE, payload: { ...score, local: true } });
+    } catch (err) {
+      //   console.error(err);
+      dispatch({ type: CREATE_U_SCORE, payload: { ...score, local: true } });
     }
   };
 };

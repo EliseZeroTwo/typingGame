@@ -4,6 +4,7 @@ export {
   fetchLeaderboard,
   resetText,
   resetlastScore,
-  setLoadingOn
+  setLoadingOn,
+  createUScore
 } from "./game";
 export { login, signup, logout, checkForExpiredToken } from "./auth";

@@ -3,6 +3,7 @@ import Word from "./Word";
 import { Input } from "antd";
 import {
   createScore,
+  createUScore,
   fetchARandomText,
   resetText,
   setLoadingOn
@@ -91,11 +92,19 @@ class TextBlock extends Component {
               (this.props.text.text.length - this.state.incorrectKeystrokes) /
               this.props.text.text.length;
             const textID = this.props.text.id;
-            this.props.createScore({
-              wpm: Math.ceil(wpm),
-              accuracy: accuracy,
-              text: textID
-            });
+            if (this.props.user) {
+              this.props.createScore({
+                wpm: Math.ceil(wpm),
+                accuracy: accuracy,
+                text: textID
+              });
+            } else {
+              this.props.createUScore({
+                wpm: Math.ceil(wpm),
+                accuracy: accuracy,
+                text: textID
+              });
+            }
             this.props.fetchARandomText();
             // this.props.resetText();
             this.props.setLoadingOn();
@@ -151,13 +160,20 @@ class TextBlock extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     //Syntax
     fetchARandomText: () => dispatch(fetchARandomText()),
     createScore: score => dispatch(createScore(score)),
-    setLoadingOn: () => dispatch(setLoadingOn())
+    setLoadingOn: () => dispatch(setLoadingOn()),
+    createUScore: score => dispatch(createUScore(score))
   };
 };
 
-export default connect(null, mapDispatchToProps)(TextBlock);
+export default connect(mapStateToProps, mapDispatchToProps)(TextBlock);

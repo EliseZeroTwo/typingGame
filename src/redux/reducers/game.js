@@ -4,7 +4,8 @@ import {
   FETCH_LEADERBOARD,
   RESET_TEXT,
   RESET_LAST,
-  SET_LOADING
+  SET_LOADING,
+  CREATE_U_SCORE
 } from "../actions/actionTypes";
 
 const initialState = { loading: false };
@@ -23,6 +24,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, lastScore: null };
     case SET_LOADING:
       return { ...state, loading: true };
+    case CREATE_U_SCORE:
+      return { ...state, lastScore: payload, loading: false };
     default:
       return state;
   }
