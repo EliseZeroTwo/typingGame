@@ -187,7 +187,7 @@ class TextBlock extends Component {
               textJustify: "inter-word",
               userSelect: "none",
               position: "relative",
-              top: `calc(${this.state.topValue}px - 0.17rem)`
+              top: `calc(${this.state.topValue}px - 0.19rem)`
             }}
           >
             {wordsRender}
