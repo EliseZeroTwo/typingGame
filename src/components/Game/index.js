@@ -9,10 +9,15 @@ import {
   resetText,
   resetlastScore
 } from "../../redux/actions";
+import { Radio } from "antd";
 
 class index extends Component {
   componentDidMount = () => {
-    if (!this.props.text) this.props.fetchARandomText();
+    if (!this.props.text) {
+      let type = localStorage.getItem("type");
+      if (!type) type = 0;
+      this.props.fetchARandomText(type);
+    }
     this.props.resetLastScore();
     document.addEventListener("keydown", this.escFunction, false);
   };
@@ -23,18 +28,40 @@ class index extends Component {
     }
   };
   componentDidUpdate = () => {
-    if (!this.props.text) this.props.fetchARandomText();
+    let type = localStorage.getItem("type");
+    if (!type) type = 0;
+    if (!this.props.text) this.props.fetchARandomText(type);
+  };
+  handleTypeChange = e => {
+    this.props.resetText();
+    localStorage.setItem("type", e.target.value);
+    // this.props.fetchARandomText(e.target.value);
+    // this.setState({ type: e.target.value });
   };
   render() {
+    let type = localStorage.getItem("type");
+    if (!type) type = 0;
     return (
       <div>
         <NavBar history={this.props.history} />
         <Typewriter
-          style={{ width: 150, height: 150, marginTop: 90, marginLeft: 10 }}
+          style={{
+            width: 150,
+            height: 150,
+            marginTop: 90,
+            marginBottom: 30,
+            marginLeft: 10,
+            display: "block"
+          }}
+          className="mx-auto"
         />
-
+        <Radio.Group value={parseInt(type)} onChange={this.handleTypeChange}>
+          <Radio.Button value={0}>Random Paragraphs</Radio.Button>
+          <Radio.Button value={1}>100 Random Words</Radio.Button>
+          <Radio.Button value={2}>200 Random Words</Radio.Button>
+        </Radio.Group>
         {this.props.text ? (
-          <TextBlock text={this.props.text} history={this.props.history} />
+          <TextBlock history={this.props.history} />
         ) : (
           <Spin size="large" style={{ display: "block", marginTop: 150 }} />
         )}
@@ -51,7 +78,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     //Syntax
-    fetchARandomText: () => dispatch(fetchARandomText()),
+    fetchARandomText: type => dispatch(fetchARandomText(type)),
     resetText: () => dispatch(resetText()),
     resetLastScore: () => dispatch(resetlastScore())
   };

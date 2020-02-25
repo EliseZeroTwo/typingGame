@@ -7,7 +7,7 @@ export const login = userData => {
   return async dispatch => {
     try {
       const res = await axios.post(
-        "https://api.touchtypo.com/api/login/",
+        "http://127.0.0.1:8000/api/login/",
         userData
       );
 

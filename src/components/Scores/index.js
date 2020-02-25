@@ -8,6 +8,14 @@ import { Button, Spin } from "antd";
 class index extends Component {
   componentDidMount = () => {
     this.props.fetchLeaderboard();
+    document.addEventListener("keydown", this.escFunction, false);
+  };
+
+  escFunction = event => {
+    if (event.keyCode === 13) {
+      //Do whatever when esc is pressed
+      this.props.history.replace("/game");
+    }
   };
   componentDidUpdate = prevProps => {
     if (this.props.lastScore != prevProps.lastScore) {
@@ -49,6 +57,9 @@ class index extends Component {
         >
           Start a test
         </Button>
+        <p className="mt-1" style={{ fontSize: 12, color: "grey" }}>
+          Or click ENTER
+        </p>
         {this.props.leaderboard ? (
           <Leaderboard scores={this.props.leaderboard} />
         ) : (

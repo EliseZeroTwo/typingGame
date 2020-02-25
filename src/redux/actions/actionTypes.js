@@ -8,3 +8,4 @@ export const RESET_TEXT = "RESET_TEXT";
 export const RESET_LAST = "RESET_LAST";
 export const SET_LOADING = "SET_LOADING";
 export const CREATE_U_SCORE = "CREATE_U_SCORE";
+export const CREATE_RANDOM_SCORE = "CREATE_RANDOM_SCORE";

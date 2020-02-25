@@ -9,9 +9,10 @@ export default class Word extends Component {
     return (
       <>
         <span
+          ref="word"
           style={{
-            paddingTop: 10,
-            paddingBottom: 10,
+            paddingTop: 5,
+            paddingBottom: 5,
             paddingRight: 2,
             paddingLeft: 2,
             backgroundColor: getColor(),

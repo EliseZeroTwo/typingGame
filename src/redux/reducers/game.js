@@ -5,7 +5,8 @@ import {
   RESET_TEXT,
   RESET_LAST,
   SET_LOADING,
-  CREATE_U_SCORE
+  CREATE_U_SCORE,
+  CREATE_RANDOM_SCORE
 } from "../actions/actionTypes";
 
 const initialState = { loading: false };
@@ -26,6 +27,9 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: true };
     case CREATE_U_SCORE:
       return { ...state, lastScore: payload, loading: false };
+    case CREATE_RANDOM_SCORE:
+      return { ...state, lastScore: payload, loading: false };
+
     default:
       return state;
   }

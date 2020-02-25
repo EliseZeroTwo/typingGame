@@ -9,8 +9,13 @@ import {
   setLoadingOn
 } from "../../redux/actions";
 import { connect } from "react-redux";
+import { createRandomScore } from "../../redux/actions/game";
 
 class TextBlock extends Component {
+  constructor(props) {
+    super(props);
+    this.wordRef = React.createRef();
+  }
   state = {
     nextWord: "",
     currentIndex: 0,
@@ -21,7 +26,8 @@ class TextBlock extends Component {
     incorrectKeystrokes: 0,
     wpm: 0,
     typedKeys: 0,
-    longestTyped: ""
+    longestTyped: "",
+    topValue: 0
   };
   componentDidMount = () => {
     this.refs.textInput.focus();
@@ -69,8 +75,20 @@ class TextBlock extends Component {
       if (this.state.nextWord.length == e.target.value.length) {
         this.setState({ currentIndex: this.state.currentIndex + 1 });
         this.setState({ inputValue: "", longestTyped: "" });
-
-        if (this.state.currentIndex + 2 == this.props.text.length) {
+        if (
+          this.refs["w".concat(this.state.currentIndex)].refs.word.offsetWidth +
+            this.refs["w".concat(this.state.currentIndex)].refs.word
+              .offsetLeft >=
+          this.refs.textArea.clientWidth
+        )
+          this.setState({
+            topValue:
+              this.state.topValue -
+              this.refs["w".concat(this.state.currentIndex)].refs.word
+                .offsetHeight -
+              2
+          });
+        if (this.state.currentIndex + 2 == this.props.text.text.length) {
           this.setState({
             nextWord: this.props.text.text.split(" ")[
               this.state.currentIndex + 1
@@ -92,20 +110,34 @@ class TextBlock extends Component {
               (this.props.text.text.length - this.state.incorrectKeystrokes) /
               this.props.text.text.length;
             const textID = this.props.text.id;
-            if (this.props.user) {
-              this.props.createScore({
-                wpm: Math.ceil(wpm),
-                accuracy: accuracy,
-                text: textID
-              });
+            let type = localStorage.getItem("type");
+            if (!type) type = 0;
+            if (this.props.text.id) {
+              if (this.props.user) {
+                this.props.createScore({
+                  wpm: Math.ceil(wpm),
+                  accuracy: accuracy,
+                  text: textID
+                });
+              } else {
+                this.props.createUScore({
+                  wpm: Math.ceil(wpm),
+                  accuracy: accuracy,
+                  text: textID
+                });
+              }
             } else {
-              this.props.createUScore({
-                wpm: Math.ceil(wpm),
-                accuracy: accuracy,
-                text: textID
-              });
+              this.props.createRandomScore(
+                {
+                  wpm: Math.ceil(wpm),
+                  accuracy: accuracy,
+                  type: type
+                },
+                !!this.props.user ? false : true
+              );
             }
-            this.props.fetchARandomText();
+
+            this.props.fetchARandomText(type);
             // this.props.resetText();
             this.props.setLoadingOn();
 
@@ -121,19 +153,49 @@ class TextBlock extends Component {
     const wordsRender = words.map((word, indx) => (
       <Word
         word={word}
+        ref={"w".concat(indx)}
         lastWord={indx != length - 1 ? false : true}
         error={this.state.error && indx == this.state.currentIndex}
         isCurrent={indx == this.state.currentIndex}
       />
     ));
     return (
-      <div className="mx-auto mt-5" style={{ width: "85%", height: "auto" }}>
-        <h3 className=" mx-auto" style={{ lineHeight: 1.7, width: "100%" }}>
-          {wordsRender}
-        </h3>
+      <div className="mx-auto mt-4" style={{ width: "85%", height: "auto" }}>
+        <div
+          className="mx-auto"
+          style={{
+            paddingTop: 6,
+
+            paddingRight: 5,
+            paddingLeft: 5,
+            height: 122,
+            width: "85%",
+            overflow: "hidden",
+            borderStyle: "dotted",
+            borderWidth: 1
+          }}
+        >
+          <h5
+            className=" mx-auto"
+            ref={"textArea"}
+            style={{
+              lineHeight: 1.7,
+              width: "100%",
+              fontSize: 22,
+              wordSpacing: "-5px",
+              textAlign: "justify",
+              textJustify: "inter-word",
+              userSelect: "none",
+              position: "relative",
+              top: `calc(${this.state.topValue}px - 0.17rem)`
+            }}
+          >
+            {wordsRender}
+          </h5>
+        </div>
         <Input
-          className="mt-3 w-75 py-4"
-          ref="textInput"
+          className="mt-4 w-50 py-4"
+          ref={"textInput"}
           type="text"
           autoComplete="off"
           autoCorrect="off"
@@ -162,17 +224,20 @@ class TextBlock extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth
+    user: state.auth,
+    text: state.game.text
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     //Syntax
-    fetchARandomText: () => dispatch(fetchARandomText()),
+    fetchARandomText: type => dispatch(fetchARandomText(type)),
     createScore: score => dispatch(createScore(score)),
     setLoadingOn: () => dispatch(setLoadingOn()),
-    createUScore: score => dispatch(createUScore(score))
+    createUScore: score => dispatch(createUScore(score)),
+    createRandomScore: (score, local) =>
+      dispatch(createRandomScore(score, local))
   };
 };
 

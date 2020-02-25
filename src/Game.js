@@ -169,7 +169,7 @@ class Game extends Component {
   render() {
     return (
       <div className="container my-5">
-        <h3
+        <h5
           ref="h"
           className="my-5"
           style={{
@@ -178,7 +178,7 @@ class Game extends Component {
           }}
         >
           {this.showWords()}
-        </h3>
+        </h5>
 
         <input
           className="form-control rounded-pill"
