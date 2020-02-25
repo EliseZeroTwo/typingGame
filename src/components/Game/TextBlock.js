@@ -88,7 +88,10 @@ class TextBlock extends Component {
                 .offsetHeight -
               2
           });
-        if (this.state.currentIndex + 2 == this.props.text.text.length) {
+        if (
+          this.state.currentIndex + 2 ==
+          this.props.text.text.split(" ").length
+        ) {
           this.setState({
             nextWord: this.props.text.text.split(" ")[
               this.state.currentIndex + 1
